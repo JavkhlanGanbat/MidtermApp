@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class WordViewModel(private val repository: Repository): ViewModel() {
 val words: Flow<List<Word>> = repository.getAllWordsFromRoom()
-    private val _selectedOption = MutableStateFlow("Хоёуланг нь харуулах")
+    private val _selectedOption = MutableStateFlow("Both")
     val selectedOption: StateFlow<String> = _selectedOption
     fun setSelectedOption(option:String){
         _selectedOption.value=option
