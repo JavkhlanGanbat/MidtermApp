@@ -32,9 +32,9 @@ import androidx.compose.material.icons.filled.ArrowBack
 fun SettingsScreen(navController: NavController, viewModel: WordViewModel) {
     val selectedOption by viewModel.selectedOption.collectAsState()
     val options = listOf(
-        "Монгол болон гадаад үгийг зэрэг харуулах",
-        "Зөвхөн гадаад үгийг харуулах",
-        "Монгол үгийг харуулах"
+        "Both",
+        "Eng",
+        "Mongol"
     )
   
     Scaffold(

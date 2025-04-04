@@ -46,7 +46,7 @@ fun FavoritesScreen(navController: NavHostController, viewModel: WordViewModel) 
                 items(favoriteWords) { word ->
                     WordDisplay(
                         word = word,
-                        displayOption = "Монгол болон гадаад үг",
+                        displayOption = "Both",
                         onToggleFavorite = { updatedWord -> viewModel.updateWord(updatedWord) },
                         onLongPress = { /* ...existing behavior... */ }
                     )

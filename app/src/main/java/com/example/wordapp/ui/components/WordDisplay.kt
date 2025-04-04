@@ -60,7 +60,7 @@ fun WordDisplay(
                 )
             }
 
-            if (displayOption != "Монгол үгийг харуулах") {
+            if (displayOption != "Mongol") {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -79,7 +79,7 @@ fun WordDisplay(
                 }
             }
 
-            if (displayOption != "Зөвхөн гадаад үгийг харуулах") {
+            if (displayOption != "Eng") {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
