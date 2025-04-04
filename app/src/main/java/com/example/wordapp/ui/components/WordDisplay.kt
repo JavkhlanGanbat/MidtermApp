@@ -44,7 +44,7 @@ fun WordDisplay(
                     onClick = {},
                     onLongClick = { onLongPress(currentWord) }
                 )
-                .padding(horizontal = 16.dp, vertical = 100.dp)
+                .padding(horizontal = 16.dp, vertical = 50.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -64,12 +64,12 @@ fun WordDisplay(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 8.dp)
+                        .padding(bottom = 4.dp)
                         .background(
                             color = MaterialTheme.colorScheme.surfaceVariant,
                             shape = MaterialTheme.shapes.medium
                         )
-                        .padding(30.dp)
+                        .padding(20.dp)
                 ) {
                     Text(
                         text = currentWord.foreignWord,
@@ -87,7 +87,7 @@ fun WordDisplay(
                             color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
                             shape = MaterialTheme.shapes.medium
                         )
-                        .padding(30.dp)
+                        .padding(20.dp)
                 ) {
                     Text(
                         text = currentWord.mongolianWord,

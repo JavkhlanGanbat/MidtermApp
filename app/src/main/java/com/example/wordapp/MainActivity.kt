@@ -13,7 +13,7 @@ import com.example.wordapp.ViewModel.WordViewModel
 import com.example.wordapp.room.WordDB
 import com.example.wordapp.ui.components.WordApp
 import com.example.wordapp.ui.theme.WordappTheme
-import com.example.wordapp.utils.NotificationHelper
+
 private const val TAG = "MainActivity"
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

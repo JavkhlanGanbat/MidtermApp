@@ -9,6 +9,6 @@ data class Word(
     val id: Int = 0,
     val foreignWord: String,
     val mongolianWord: String,
-    // Added favorite flag
+    // Olon user-tei app deer hezee ch isFavorite gesen talbar uguhgui, nemelteer hiisen ym
     val isFavorite: Boolean = false
 )

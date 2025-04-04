@@ -1,4 +1,4 @@
-package com.example.wordapp.workers
+package com.example.wordapp
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,8 +12,6 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.example.wordapp.MainActivity
-import com.example.wordapp.R
 import java.util.concurrent.TimeUnit
 
 class DailyNotificationWorker(

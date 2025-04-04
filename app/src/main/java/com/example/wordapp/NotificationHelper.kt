@@ -1,4 +1,4 @@
-package com.example.wordapp.utils
+package com.example.wordapp
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -7,8 +7,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.example.wordapp.receivers.NotificationReceiver
-import com.example.wordapp.workers.DailyNotificationWorker
 import java.util.concurrent.TimeUnit
 
 class NotificationHelper(private val context: Context) {
