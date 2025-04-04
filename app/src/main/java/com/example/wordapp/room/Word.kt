@@ -6,7 +6,9 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "words")
 data class Word(
     @PrimaryKey(autoGenerate = true)
-    val id:Int = 0,
-    val foreignWord:String,
-    val mongolianWord: String
+    val id: Int = 0,
+    val foreignWord: String,
+    val mongolianWord: String,
+    // Added favorite flag
+    val isFavorite: Boolean = false
 )

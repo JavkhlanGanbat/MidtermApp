@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.example.wordapp.ViewModel.WordViewModel
 import com.example.wordapp.ui.screen.MainScreen
 import com.example.wordapp.ui.screen.SettingsScreen
+import com.example.wordapp.ui.screen.FavoritesScreen
 
 @Composable
 fun WordApp(navController: NavHostController, viewModel: WordViewModel) {
@@ -19,6 +20,9 @@ fun WordApp(navController: NavHostController, viewModel: WordViewModel) {
         }
         composable("settingsScreen") {
             SettingsScreen(navController, viewModel)
+        }
+        composable("favoritesScreen") {
+            FavoritesScreen(navController, viewModel)
         }
     }
 }

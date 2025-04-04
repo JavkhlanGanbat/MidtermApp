@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -50,6 +51,9 @@ fun MainScreen(navController: NavController, viewModel: WordViewModel) {
             TopAppBar(
                 title = { Text("Картны апп") },
                 actions = {
+                    IconButton(onClick = { navController.navigate("favoritesScreen") }) {
+                        Icon(Icons.Default.Star, contentDescription = "Хадгалсан үгс")
+                    }
                     IconButton(onClick = { navController.navigate("settingsScreen") }) {
                         Icon(Icons.Default.MoreVert, contentDescription = "Тохиргоо")
                     }
@@ -64,8 +68,6 @@ fun MainScreen(navController: NavController, viewModel: WordViewModel) {
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-
-
         ) {
             WordDisplay(
                 word = words.getOrNull(currentIndex),
@@ -73,7 +75,8 @@ fun MainScreen(navController: NavController, viewModel: WordViewModel) {
                 onLongPress = { word ->
                     editingWord = word
                     showEditDialog = true
-                }
+                },
+                onToggleFavorite = { updatedWord -> viewModel.updateWord(updatedWord) }
             )
 
             Row(
@@ -107,8 +110,6 @@ fun MainScreen(navController: NavController, viewModel: WordViewModel) {
                         Text("Устгах")
                     }
                 }
-
-
             }
 
             WordNavigationButtons(
