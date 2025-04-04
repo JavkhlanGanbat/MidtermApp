@@ -49,11 +49,11 @@ class DailyNotificationWorker(
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle("Үг цээжлэх цаг боллоо")
             .setContentText("Өнөөдрийн шинэ үгээ сурцгаая!")
-            .setPriority(NotificationCompat.PRIORITY_HIGH) // Changed to high priority
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(createNotificationIntent())
             .setAutoCancel(true)
-            .setOngoing(true) // Makes notification non-dismissable
-            .setOnlyAlertOnce(true) // Only play sound/vibrate first time
+            .setOngoing(true)
+            .setOnlyAlertOnce(true)
             .build()
 
         notificationManager.notify(notificationId, notification)

@@ -3,9 +3,12 @@ package com.example.wordapp.ui.screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Star
@@ -20,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.wordapp.ViewModel.WordViewModel
@@ -49,13 +54,22 @@ fun MainScreen(navController: NavController, viewModel: WordViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Картны апп") },
+                title = { Text("Картны апп", color = Color.White) },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF6A1B9A)),
                 actions = {
                     IconButton(onClick = { navController.navigate("favoritesScreen") }) {
-                        Icon(Icons.Default.Star, contentDescription = "Хадгалсан үгс")
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = "Хадгалсан үгс",
+                            tint = Color.Yellow
+                        )
                     }
                     IconButton(onClick = { navController.navigate("settingsScreen") }) {
-                        Icon(Icons.Default.MoreVert, contentDescription = "Тохиргоо")
+                        Icon(
+                            imageVector = Icons.Default.MoreVert,
+                            contentDescription = "Тохиргоо",
+                            tint = Color.White
+                        )
                     }
                 }
             )
@@ -81,31 +95,35 @@ fun MainScreen(navController: NavController, viewModel: WordViewModel) {
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.Center
             ) {
                 Button(
                     onClick = {
                         editingWord = null
                         showEditDialog = true
                     },
-                    modifier = Modifier.weight(1f)
+                    shape = RoundedCornerShape(16.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00897B))
                 ) {
                     Text("Нэмэх")
                 }
+                Spacer(modifier = Modifier.width(8.dp))
                 words.getOrNull(currentIndex)?.let { currentWord ->
                     Button(
                         onClick = {
                             editingWord = currentWord
                             showEditDialog = true
                         },
-                        modifier = Modifier.weight(1f)
+                        shape = RoundedCornerShape(16.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00897B))
                     ) {
                         Text("Засах")
                     }
-
+                    Spacer(modifier = Modifier.width(8.dp))
                     Button(
                         onClick = { showDeleteDialog = true },
-                        modifier = Modifier.weight(1f)
+                        shape = RoundedCornerShape(16.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD32F2F))
                     ) {
                         Text("Устгах")
                     }
@@ -150,9 +168,10 @@ fun MainScreen(navController: NavController, viewModel: WordViewModel) {
                             currentIndex = (words.size - 2).coerceAtLeast(0)
                         }
                     },
+                    shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.error,
-                        contentColor = MaterialTheme.colorScheme.onError
+                        containerColor = Color(0xFFD32F2F),
+                        contentColor = Color.White
                     )
                 ) {
                     Text("Устгах")
