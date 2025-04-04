@@ -1,0 +1,81 @@
+Welcome to the FlashCardApp! This script will guide you through what the app does, how it works, and how the code is structured.
+
+---
+
+## What is FlashCardApp?
+
+FlashCardApp is an Android application designed to help users learn new words using flashcards. It allows users to:
+1. Add new words with their translations.
+2. Edit or delete existing words.
+3. Mark words as favorites for quick access.
+4. View words in different display modes (e.g., show both languages, only English, or only Mongolian).
+5. Receive daily notifications reminding them to review their words.
+
+The app is built using modern Android development practices, including Jetpack Compose for UI, Room for local database storage, and WorkManager for background notifications.
+
+---
+
+## How Does the App Work?
+
+### 1. User Interaction
+- Users interact with the app through a clean and intuitive interface.
+- The main screen displays flashcards, and users can navigate between them using "Previous" and "Next" buttons.
+- Users can add, edit, or delete words using dialogs.
+- A settings screen allows users to choose how words are displayed.
+- A favorites screen lists all words marked as favorites.
+
+### 2. Data Management
+- Words are stored locally in a Room database.
+- The app uses the MVVM (Model-View-ViewModel) architecture to separate concerns:
+  - **Model:** The `Word` entity represents a flashcard.
+  - **ViewModel:** The `WordViewModel` manages the app's state and handles user actions.
+  - **View:** The UI is built using Jetpack Compose.
+
+### 3. Notifications
+- The app sends daily notifications to remind users to review their words.
+- Notifications are scheduled using WorkManager and AlarmManager for reliability.
+
+---
+
+## How Does the Code Work?
+
+### MainActivity
+- The `MainActivity` is the entry point of the app.
+- It initializes the Room database, Repository, and ViewModel.
+- It sets up the UI using Jetpack Compose and applies the app's theme.
+- When the app is closed, it schedules a notification to remind the user to review words.
+
+### ViewModel
+- The `WordViewModel` acts as a bridge between the UI and the Repository.
+- It provides functions to add, update, and delete words.
+- It manages the app's state, including the list of words and the selected display option.
+
+### Repository
+- The `Repository` abstracts the data layer and provides a clean API for the ViewModel.
+- It interacts with the Room database to perform CRUD operations on words.
+
+### Room Database
+- The Room database consists of:
+  - **Entity (`Word.kt`):** Represents a flashcard with fields for ID, foreign word, Mongolian translation, and favorite status.
+  - **DAO (`WordAppDao.kt`):** Defines methods for querying, inserting, updating, and deleting words.
+  - **Database (`WordDB.kt`):** Configures the Room database and handles migrations.
+
+### UI Components
+- The UI is built using Jetpack Compose and consists of several screens and components:
+  - **MainScreen:** Displays flashcards and provides navigation and CRUD actions.
+  - **SettingsScreen:** Allows users to select their preferred display mode.
+  - **FavoritesScreen:** Lists all favorite words.
+  - **WordEditDialog:** A dialog for adding or editing words.
+  - **WordDisplay:** Displays a single flashcard with options to mark it as favorite.
+
+### Notifications
+- The app uses WorkManager and AlarmManager to schedule notifications.
+- The `DailyNotificationWorker` sends a notification reminding the user to review words.
+- The `NotificationHelper` manages scheduling and canceling notifications.
+
+---
+
+## Summary
+
+FlashCardApp is a feature-rich application that combines modern Android technologies to provide a seamless learning experience. Its modular architecture makes it easy to understand, extend, and maintain.
+

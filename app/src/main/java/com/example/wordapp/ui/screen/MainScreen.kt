@@ -1,29 +1,11 @@
 package com.example.wordapp.ui.screen
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -33,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.wordapp.ViewModel.WordViewModel
@@ -75,67 +58,156 @@ fun MainScreen(navController: NavController, viewModel: WordViewModel) {
             )
         }
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            WordDisplay(
-                word = words.getOrNull(currentIndex),
-                displayOption = selectedOption,
-                onLongPress = { word ->
-                    editingWord = word
-                    showEditDialog = true
-                },
-                onToggleFavorite = { updatedWord -> viewModel.updateWord(updatedWord) }
-            )
+        val configuration = LocalConfiguration.current
+        val screenWidth = configuration.screenWidthDp.dp
+        val screenHeight = configuration.screenHeightDp.dp
+        val isLandscape = screenWidth > screenHeight
 
+        if (isLandscape) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Button(
-                    onClick = {
-                        editingWord = null
-                        showEditDialog = true
-                    },
-                    shape = RoundedCornerShape(16.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00897B))
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text("Нэмэх")
+                    WordDisplay(
+                        word = words.getOrNull(currentIndex),
+                        displayOption = selectedOption,
+                        onLongPress = { word ->
+                            editingWord = word
+                            showEditDialog = true
+                        },
+                        onToggleFavorite = { updatedWord -> viewModel.updateWord(updatedWord) }
+                    )
                 }
-                Spacer(modifier = Modifier.width(8.dp))
-                words.getOrNull(currentIndex)?.let { currentWord ->
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .widthIn(max = screenWidth * 0.4f),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     Button(
                         onClick = {
-                            editingWord = currentWord
+                            editingWord = null
                             showEditDialog = true
                         },
                         shape = RoundedCornerShape(16.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00897B))
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00897B)),
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("Засах")
+                        Text("Нэмэх")
                     }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Button(
-                        onClick = { showDeleteDialog = true },
-                        shape = RoundedCornerShape(16.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD32F2F))
-                    ) {
-                        Text("Устгах")
+
+                    words.getOrNull(currentIndex)?.let { currentWord ->
+                        Button(
+                            onClick = {
+                                editingWord = currentWord
+                                showEditDialog = true
+                            },
+                            shape = RoundedCornerShape(16.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00897B)),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Засах")
+                        }
+
+                        Button(
+                            onClick = { showDeleteDialog = true },
+                            shape = RoundedCornerShape(16.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD32F2F)),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Устгах")
+                        }
                     }
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    WordNavigationButtons(
+                        currentIndex = currentIndex,
+                        wordCount = words.size,
+                        onPreviousClick = { if (currentIndex > 0) currentIndex-- },
+                        onNextClick = { if (currentIndex < words.size - 1) currentIndex++ }
+                    )
                 }
             }
+        } else {
+            Column(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                WordDisplay(
+                    word = words.getOrNull(currentIndex),
+                    displayOption = selectedOption,
+                    onLongPress = { word ->
+                        editingWord = word
+                        showEditDialog = true
+                    },
+                    onToggleFavorite = { updatedWord -> viewModel.updateWord(updatedWord) }
+                )
 
-            WordNavigationButtons(
-                currentIndex = currentIndex,
-                wordCount = words.size,
-                onPreviousClick = { if (currentIndex > 0) currentIndex-- },
-                onNextClick = { if (currentIndex < words.size - 1) currentIndex++ }
-            )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Button(
+                        onClick = {
+                            editingWord = null
+                            showEditDialog = true
+                        },
+                        shape = RoundedCornerShape(16.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00897B)),
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text("Нэмэх")
+                    }
+
+                    words.getOrNull(currentIndex)?.let { currentWord ->
+                        Button(
+                            onClick = {
+                                editingWord = currentWord
+                                showEditDialog = true
+                            },
+                            shape = RoundedCornerShape(16.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00897B)),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("Засах")
+                        }
+
+                        Button(
+                            onClick = { showDeleteDialog = true },
+                            shape = RoundedCornerShape(16.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD32F2F)),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("Устгах")
+                        }
+                    }
+                }
+
+                WordNavigationButtons(
+                    currentIndex = currentIndex,
+                    wordCount = words.size,
+                    onPreviousClick = { if (currentIndex > 0) currentIndex-- },
+                    onNextClick = { if (currentIndex < words.size - 1) currentIndex++ }
+                )
+            }
         }
     }
 
@@ -185,3 +257,6 @@ fun MainScreen(navController: NavController, viewModel: WordViewModel) {
         )
     }
 }
+
+@Composable
+fun Modifier.wrapContentWidth(): Modifier = this

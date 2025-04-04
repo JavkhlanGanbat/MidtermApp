@@ -20,6 +20,7 @@ class NotificationHelper(private val context: Context) {
             .build()
 
         WorkManager.getInstance(context).enqueue(workRequest)
+        DailyNotificationWorker.enqueue(context) // Enqueue the worker
 
         // AlarmManager-ээр 1 секундын дараа (backup)
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager

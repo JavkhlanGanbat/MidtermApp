@@ -74,9 +74,12 @@ class DailyNotificationWorker(
         fun enqueue(context: Context) {
             // Note: Minimum interval for PeriodicWorkRequest is 15 minutes
             // For more frequent notifications, consider using AlarmManager
+            val interval = 15L // Change to 1 for testing (minutes)
+            val timeUnit = TimeUnit.MINUTES // Change to TimeUnit.MINUTES for testing
+
             val workRequest = PeriodicWorkRequestBuilder<DailyNotificationWorker>(
-                15, // Minimum interval allowed by WorkManager
-                TimeUnit.MINUTES
+                interval, // Minimum interval allowed by WorkManager
+                timeUnit
             )
                 .setInitialDelay(1, TimeUnit.SECONDS)
                 .build()
