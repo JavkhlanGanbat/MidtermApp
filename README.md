@@ -1,128 +1,158 @@
-# FlashCardApp
+FlashCardApp
+FlashCardApp-д тавтай морил! Энэхүү Android аппликэйшн нь хэрэглэгчдэд шинэ үгсийг flashcard-аар дамжуулан сурахад туслах зорилготой. Доор апп хэрхэн ажилладаг, архитектур болон эхлүүлэх зааврын талаар дэлгэрэнгүй тайлбарласан болно.
 
-Welcome to the FlashCardApp! This Android application is designed to help users learn new words through flashcards. Below is a detailed explanation of how the app works, its architecture, and how to get started.
+Агуулгын жагсаалт
+Тойм
 
----
+Архитектур
 
-## Table of Contents
-- [Overview](#overview)
-- [Architecture](#architecture)
-  - [MVVM Pattern](#mvvm-pattern)
-  - [Room Database](#room-database)
-  - [Jetpack Compose for UI](#jetpack-compose-for-ui)
-  - [WorkManager & AlarmManager](#workmanager--alarmmanager)
-- [Project Structure](#project-structure)
-- [How It Works](#how-it-works)
-  - [MainActivity](#mainactivity)
-  - [ViewModel](#viewmodel)
-  - [Repository](#repository)
-  - [Database and DAO](#database-and-dao)
-  - [UI Components](#ui-components)
-  - [Notifications](#notifications)
-- [Installation and Running the App](#installation-and-running-the-app)
-- [Future Improvements](#future-improvements)
-- [Conclusion](#conclusion)
+MVVM Pattern
 
----
+Room Database
 
-## Overview
-The FlashCardApp is an Android application that lets you add, edit, delete, and review flashcards for language learning. It provides a simple and interactive interface for managing words and their translations, and even allows you to mark favorite ones. The app also reminds you to review words with timely notifications.
+Jetpack Compose for UI
 
----
+WorkManager & AlarmManager
 
-## Architecture
+Төслийн бүтэц
 
-### MVVM Pattern
-- **Model:** Contains the data classes (such as the `Word` class) representing your flashcards.
-- **ViewModel:** Manages the UI-related data, interacts with the Repository, and updates the UI. (See `WordViewModel.kt`.)
-- **View:** Built with Jetpack Compose. UI components display the words, dialogs for editing, and navigation between screens. (See files under `ui` folder.)
+Хэрхэн ажилладаг вэ
 
-### Room Database
-- Uses Room to store flashcards locally on your device.
-- The `WordDB` handles database creation and migrations, and `WordAppDao` handles the database operations.
+MainActivity
 
-### Jetpack Compose for UI
-- The entire interface is built using Compose.
-- Screens such as the main screen (showing words), settings screen, and favorites screen are composable functions.
+ViewModel
 
-### WorkManager & AlarmManager
-- **WorkManager:** Schedules periodic notifications to remind users to review words.
-- **AlarmManager:** A backup scheduling mechanism ensures notifications occur even if WorkManager is delayed.
+Repository
 
----
+Database болон DAO
 
-## Project Structure
-- **ViewModel:** Located in `ViewModel/WordViewModel.kt`. It manages UI data and interacts with the Repository.
-- **Repository:** Found in `Repository/WordRepository.kt`. It is the single source of truth for data operations.
-- **Database:** The `Room` database is set up in `room/WordDB.kt`, with the DAO in `room/WordAppDao.kt` and the model in `room/Word.kt`.
-- **UI Components:** Include screens (e.g., `MainScreen.kt`, `SettingsScreen.kt`, and `FavoritesScreen.kt`) and smaller components (e.g., word display, editing dialogs).
-- **Notifications:** Implemented in `DailyNotificationWorker.kt`, and managed with helper classes.
+UI Components
 
----
+Мэдэгдэл
 
-## How It Works
+Суулгах ба ажиллуулах
 
-### MainActivity
-- Entry point of the app.
-- Initializes the database, Repository, and ViewModel.
-- Sets up navigation using Compose’s `NavHost` to switch between screens.
-- Calls `NotificationHelper` when the app is destroyed to schedule notifications.
+Цаашдын сайжруулалтууд
 
-### ViewModel
-- `WordViewModel.kt` connects the UI and Repository.
-- Provides functions to add, update, and delete words.
-- Uses Kotlin coroutines to work with asynchronous data operations.
+Дүгнэлт
 
-### Repository
-- `WordRepository.kt` acts as an intermediary between the ViewModel and the Room database.
-- Provides methods to perform CRUD operations on flashcards.
+Тойм
+FlashCardApp нь шинэ үгсийг нэмэх, засах, устгах, давтах боломжтой Android апп юм. Энэ нь үг болон орчуулгыг удирдахад хялбар, сонирхолтой хэрэглэгчийн интерфэйстэй. Мөн үг давтах цагийг сануулах мэдэгдэл илгээдэг.
 
-### Database and DAO
-- **Database (WordDB.kt):** Creates and migrates the Room database.
-- **DAO (WordAppDao.kt):** Contains functions for querying, inserting, updating, and deleting words.
+Архитектур
+MVVM Pattern
+Model: Үгсийн мэдээллийг агуулсан өгөгдлийн классууд (жишээ нь Word класс).
 
-### UI Components
-- **MainScreen:** Displays words using `WordDisplay` and allows navigation.
-- **WordEditDialog:** A dialog component that lets users add or edit words.
-- **WordDisplay:** Shows a flashcard with both the foreign word and its translation.
-- **Navigation Buttons:** Allow users to move between different flashcards.
-- **Settings Screen:** Lets users choose display preferences for words.
-- **Favorites Screen:** Lists favorite words that have been marked by the user.
+ViewModel: UI-тай холбоотой өгөгдлийг удирдаж, Repository-тай харилцан ажиллаж, UI-г шинэчилнэ. (WordViewModel.kt-ийг үзнэ үү.)
 
-### Notifications
-- **DailyNotificationWorker.kt:** Implements the notification logic.
-- **NotificationHelper.kt and NotificationReceiver.kt:** Schedule and trigger notifications using both WorkManager and AlarmManager.
-- Provides periodic reminders for users to learn new words.
+View: Jetpack Compose ашиглан бүтээсэн. UI бүрдүүлэлтийн хэсэг нь үгсийг харуулдаг, засварлах dialog-ууд болон дэлгэц хоорондын navigation-ийг багтаана. (ui фолдер доторх файлууд.)
 
----
+Room Database
+Room ашиглан таны төхөөрөмж дээр flashcard-уудыг локал хадгалдаг.
 
-## Installation and Running the App
+WordDB нь өгөгдлийн баазыг үүсгэх, хувиргах ажлыг хариуцдаг, харин WordAppDao нь мэдээллийн үйлдлүүдийг (CRUD) гүйцэтгэнэ.
 
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/yourusername/FlashCardApp.git
-   ```
-2. **Open in Android Studio:**
-   - Open Android Studio and select "Open an existing project".
-   - Navigate to the downloaded folder (e.g., `c:\Users\User\Downloads\FlashCardApp-main\MidtermApp`).
-3. **Build the Project:**
-   - Ensure that you have the required Android SDK and necessary Compose libraries installed.
-   - Click on “Build” and then “Make Project”.
-4. **Run on an Emulator or Device:**
-   - Connect an Android device or start an emulator.
-   - Run the app by clicking on the Run button.
+Jetpack Compose for UI
+Бүх UI нь Jetpack Compose ашиглан бүтээгдсэн.
 
----
+Үндсэн дэлгэц, тохиргооны дэлгэц, дуртай үгсийн дэлгэц зэрэг нь composable function хэлбэрээр бүтээгдсэн.
 
-## Future Improvements
-- **Enhanced UI:** Adding animations and more themes.
-- **Additional Features:** Possibility to add images or audio to flashcards.
-- **Customization:** Allowing users to set custom notification intervals.
-- **Performance:** Enhancing data synchronization for larger datasets.
+WorkManager & AlarmManager
+WorkManager: Хэрэглэгчдэд өдөр бүр үг давтахыг сануулах тогтмол мэдэгдэл үүсгэдэг.
 
----
+AlarmManager: WorkManager ажиллахгүй тохиолдолд мэдэгдэл заавал ирэх нөхцөлийг хангадаг нөөц механизм юм.
 
-## Conclusion
-The FlashCardApp is built using modern Android development practices. It employs the MVVM pattern, Room for local storage, and Jetpack Compose for UI, making it a clean and maintainable project ideal for learning or expanding your Android development skills. Whether you're a beginner or an experienced developer, this app provides a practical example of combining several Android components into one cohesive application.
+Төслийн бүтэц
+ViewModel: ViewModel/WordViewModel.kt-д байрладаг. UI өгөгдлийг удирдаж, Repository-тай харилцана.
 
-Happy coding and enjoy learning with FlashCardApp!
+Repository: Repository/WordRepository.kt-д байрладаг. Өгөгдлийн үйлдлүүдийг төвлөрүүлж удирддаг.
+
+Database: room/WordDB.kt дотор Room database үүсгэгдсэн. WordAppDao.kt нь DAO, харин Word.kt нь өгөгдлийн модел юм.
+
+UI Components: Үүнд дэлгэцүүд (MainScreen.kt, SettingsScreen.kt, FavoritesScreen.kt) болон жижиг хэсгүүд (WordDisplay, WordEditDialog) орно.
+
+Notifications: DailyNotificationWorker.kt болон нэмэлт helper классууд ашиглан мэдэгдэл үүсгэнэ.
+
+Хэрхэн ажилладаг вэ
+MainActivity
+Апп-ын гол оролтын цэг.
+
+Database, Repository, ViewModel-ийг эхлүүлнэ.
+
+Compose-ийн NavHost ашиглан дэлгэц хооронд navigation хийдэг.
+
+App хаагдах үед NotificationHelper-ийг дуудаж мэдэгдлийг төлөвлөнө.
+
+ViewModel
+WordViewModel.kt нь UI болон Repository-гийн хооронд холбогч үүрэгтэй.
+
+Үг нэмэх, засах, устгах функцуудыг агуулна.
+
+Kotlin coroutines ашиглан асинхрон өгөгдлийн үйлдлүүдийг гүйцэтгэнэ.
+
+Repository
+WordRepository.kt нь ViewModel болон Room database хоорондын зуучлагч юм.
+
+CRUD үйлдлүүдийг төвлөрүүлж өгдөг.
+
+Database болон DAO
+Database (WordDB.kt): Room database үүсгэх ба хувиргалт хийнэ.
+
+DAO (WordAppDao.kt): Үгсийг нэмэх, устгах, хайх, засах функцуудыг агуулна.
+
+UI Components
+MainScreen: WordDisplay ашиглан үгсийг харуулна.
+
+WordEditDialog: Хэрэглэгчдэд үг нэмэх болон засах dialog.
+
+WordDisplay: Үг болон орчуулгыг агуулсан flashcard-ийг харуулна.
+
+Navigation Buttons: Flashcard хооронд шилжих товчлуурууд.
+
+Settings Screen: Үгсийг хэрхэн үзүүлэхийг тохируулах хэсэг.
+
+Favorites Screen: Дуртайгаар тэмдэглэсэн үгсийг жагсаана.
+
+Notifications
+DailyNotificationWorker.kt: Мэдэгдлийн үндсэн логик.
+
+NotificationHelper.kt ба NotificationReceiver.kt: WorkManager болон AlarmManager ашиглан мэдэгдлийг үүсгэх, ажиллуулах.
+
+Хэрэглэгчдэд өдөр тутмын сануулга илгээдэг.
+
+Суулгах ба ажиллуулах
+Repository-г татах:
+
+bash
+Copy
+Edit
+git clone https://github.com/yourusername/FlashCardApp.git
+Android Studio ашиглан нээх:
+
+Android Studio-г нээгээд “Open an existing project”-г сонгоно.
+
+Татаж авсан хавтас руу очиж (c:\Users\User\Downloads\FlashCardApp-main\MidtermApp) сонгоно.
+
+Төслийг build хийх:
+
+Шаардлагатай Android SDK болон Compose library-уудыг суулгасан эсэхээ шалгана.
+
+“Build” цэс рүү орж “Make Project”-г дарна.
+
+Эмулятор эсвэл бодит төхөөрөмж дээр ажиллуулах:
+
+Android төхөөрөмж холбох эсвэл эмулятор ажиллуулна.
+
+“Run” товч дарж апп-ыг ажиллуулна.
+
+Цаашдын сайжруулалтууд
+UI сайжруулалт: Анимэйшн болон шинэ сэдвүүд нэмэх.
+
+Шинэ боломжууд: Flashcard-д зураг, аудио нэмэх.
+
+Тохируулга: Мэдэгдлийн давтамжийг хэрэглэгч өөрөө тохируулах боломж.
+
+Гүйцэтгэл: Том өгөгдөлтэй үед өгөгдлийн уялдаа холбоог сайжруулах.
+
+Дүгнэлт
+FlashCardApp нь орчин үеийн Android хөгжүүлэлтийн практик дээр суурилсан. MVVM архитектур, Room database, Jetpack Compose UI зэргийг ашигласнаар цэвэрхэн, засварлахад хялбар бүтэцтэй болсон. Хэрвээ та шинээр суралцаж буй бол эсвэл туршлагатай хөгжүүлэгч бол энэхүү апп нь Android хөгжүүлэлтийн олон элементүүдийг нэгтгэсэн сайн жишээ юм.
