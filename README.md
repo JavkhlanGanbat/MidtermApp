@@ -5,10 +5,6 @@ Room Database
 Jetpack Compose for UI
 WorkManager & AlarmManager
 
-
-Төслийн бүтэц
-Хэрхэн ажилладаг вэ
-
 MainActivity
 ViewModel
 Repository
